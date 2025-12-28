@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { Menu, X, ShoppingCart, User, LogOut } from 'lucide-react';
 import type { Page, User as UserType } from '../App';
-import logo from 'figma:asset/56b78c2d6dfebeb65d9a4033b1ae02e7445ebb0c.png';
+import logo from '../assets/skyraylogo.jpg';
 
 interface NavigationProps {
   currentPage: Page;

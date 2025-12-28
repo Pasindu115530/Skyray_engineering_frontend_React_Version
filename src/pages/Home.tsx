@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
 import { Zap, Shield, Award, ArrowRight, TrendingUp, Users, Clock } from 'lucide-react';
 import type { Page } from '../App';
-import logo from 'figma:asset/56b78c2d6dfebeb65d9a4033b1ae02e7445ebb0c.png';
+import logo from '../assets/skyraylogo.jpg';
 
 interface HomeProps {
   navigateTo: (page: Page) => void;
