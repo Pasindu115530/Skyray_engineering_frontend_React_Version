@@ -1,19 +1,28 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
 import { Zap, Shield, Award, ArrowRight, TrendingUp, Users, Clock } from 'lucide-react';
 import type { Page } from '../App';
 import logo from '../assets/skyraylogo.jpg';
+import { productCategories } from '../data/productsData';
+import CartCategories from './CartCategories';
 
 interface HomeProps {
   navigateTo: (page: Page) => void;
+  onSelectCategory: (categoryId: string) => void;
 }
 
-export default function Home({ navigateTo }: HomeProps) {
+
+export default function Home({ navigateTo, onSelectCategory }: HomeProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { scrollYProgress } = useScroll();
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.95]);
 
+
+  // ✅ Handle category click
+  const handleSelectCategory = (categoryId: string) => {
+    onSelectCategory(categoryId); // store selected category   // go to product listing
+  };
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -258,6 +267,80 @@ export default function Home({ navigateTo }: HomeProps) {
           </div>
         </motion.div>
       </motion.section>
+      <section className="py-20">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  className="text-center mb-16"
+                >
+                  <h2 className="text-4xl md:text-5xl text-gray-900 mb-4">
+                    Browse by Category
+                  </h2>
+                  <p className="text-xl text-gray-600">
+                    Select a category to view available products
+                  </p>
+                </motion.div>
+      
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  {productCategories.map((category, index) => (
+                    <motion.div
+                      key={category.id}
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.6, delay: index * 0.1 }}
+                      whileHover={{ y: -10, scale: 1.03 }}
+                      onClick={() => handleSelectCategory(category.id)}
+                      className="group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all cursor-pointer"
+                    >
+                      {/* Background Gradient */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-orange-50 opacity-0 group-hover:opacity-100 transition-opacity" />
+      
+                      {/* Content */}
+                      <div className="relative p-8">
+                        {/* Icon */}
+                        <motion.div
+                          className="text-6xl mb-6"
+                          whileHover={{ rotate: 360 }}
+                          transition={{ duration: 0.6 }}
+                        >
+                          {category.icon}
+                        </motion.div>
+      
+                        {/* Title */}
+                        <h3 className="text-2xl text-gray-900 mb-4 group-hover:text-blue-600 transition-colors">
+                          {category.title}
+                        </h3>
+      
+                        {/* Description */}
+                        <p className="text-gray-600 mb-6">
+                          {category.description}
+                        </p>
+      
+                        {/* Button */}
+                        <motion.div
+                          className="flex items-center text-orange-600 group-hover:text-blue-600 transition-colors"
+                          whileHover={{ x: 5 }}
+                        >
+                          <span className="mr-2">View Items</span>
+                          <ArrowRight className="w-5 h-5" />
+                        </motion.div>
+                      </div>
+      
+                      {/* Bottom Accent */}
+                      <motion.div
+                        className="h-2 bg-gradient-to-r from-blue-600 to-orange-500"
+                        initial={{ scaleX: 0 }}
+                        whileHover={{ scaleX: 1 }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </section>
 
       {/* Features Section */}
       <section className="py-20 bg-white">

@@ -84,7 +84,15 @@ function App() {
   const renderPage = () => {
     switch (currentPage) {
       case 'home':
-        return <Home navigateTo={navigateTo} />;
+              return (
+                <Home 
+                  navigateTo={navigateTo} 
+                  onSelectCategory={(categoryId) => {
+                    setSelectedCategory(categoryId); // Set the state here
+                    navigateTo('product-listing');   // Then change the page
+                  }} 
+                />
+            );
       case 'login':
         return <Login navigateTo={navigateTo} onLogin={handleLogin} />;
       case 'register':
